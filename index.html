@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <title>Gerador de orçamento || Vidraçaria Prinz</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./assets/js/index.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+
+    <link rel="stylesheet" href="./assets/styles/config.css">
+    <link rel="stylesheet" href="./assets/styles/style.css">
+</head>
+
+<body>
+    <div class="area">
+        <div class="container">
+            <h1>Gerador de orçamentos</h1>
+            <hr><br>
+            <label class="margin" for="itens">Quanto itens vai precisar?</label><br>
+            <input class="margin" type="number" id="itens"> <br>
+            <button class="margin" id="cads">Cadastrar</button><br>
+            <hr>
+            <div class="margin" id="imprima"></div>
+            
+        </div>
+        <div class="orcamento">
+            <div id="orcamento-about">
+            </div>
+            <div class="table">
+                <table>
+                    <thead id="thead">
+        
+                    </thead>
+                    <tbody id="tbody">
+        
+                    </tbody>
+                    <tfoot id="tfoot">
+    
+                    </tfoot>
+                </table>
+            </div>
+            <div id="orcamento-footer">
+            </div>
+        </div>
+        <button id="baixar-pdf">Gerar Orçamento</button>
+        <div id="preview" style="display: none;"></div>
+    </div>
+</body>
+</html>

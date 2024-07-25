@@ -1,0 +1,58 @@
+:root {
+    --azulEE: rgb(0, 25, 66);
+    --azulE: rgb(0, 48, 124);
+    --azulF: rgb(1, 144, 223);
+    --azulFO: rgba(1, 144, 223, 0.5);
+    --preto: rgb(0, 0, 0);
+    --cinza: rgb(128, 128, 128);
+    --branco: rgb(255, 255, 255);
+    --brancoO: rgba(255, 255, 255, 0.8);
+
+    --p: 15px;
+    --m: 15px;
+    --b: 1px;
+    --br: 15px;
+    --bs: 0 0 10px var(--cinza);
+}
+
+* {
+    font-family: Arial;
+    margin: 0;
+    padding: 0;
+}
+
+label {
+    margin-top: calc(var(--m) / 2);
+}
+
+input {
+    outline-style: hidden;
+    outline-color: var(--azulF);
+    outline-width: 1px;
+    border-radius: calc(var(--br) / 3);
+    border: 0;
+    padding: calc(var(--p) / 1.5) calc(var(--p) / 1.5);
+}
+
+input[type="date"] {
+    width: 170px;
+}
+
+button {
+    margin-top: var(--m);
+    padding: calc(var(--p) /2) var(--p);
+    border-radius: calc(var(--br) / 2);
+    border: var(--b) solid var(--azulE);
+    background-color: var(--azulEE);
+    color: var(--branco);
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+button:hover {
+    box-shadow: 0 0 3px var(--azulEE);
+    transition: 300ms;
+    font-size: 1.05rem;
+    background-color: var(--azulE); 
+    cursor: pointer;
+}

@@ -1,0 +1,130 @@
+body {
+    display: flex;
+    flex-direction: center; 
+    justify-content: center;
+    align-items: center;
+    background-color: var(--azulEE);
+    color: var(--branco);
+}
+
+.area {
+    width: 80%;
+    background-color: var(--azulFO);
+    padding: var(--p);
+    border-radius: var(--br);
+    text-align: center;
+    margin-top: var(--m);
+    box-shadow: 0 0 3px var(--cinza);
+}
+
+button {
+    margin-bottom: var(--m);
+}
+
+#imprima {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    hr {
+        width: 100%;
+    }
+}
+
+.produto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    label {
+        margin-top: var(--m);
+    }
+
+    hr {
+        margin-top: var(--m);
+    }
+}
+
+.margin {
+    margin-top: 15px;
+}
+
+#orcar {
+    margin-top: var(--m);
+}
+
+.orcamento {
+    background-color: var(--branco);
+    border-radius: var(--br);
+    padding: var(--p);
+    box-shadow: var(--bs);
+    color: var(--preto);
+    align-items: start;
+
+}
+
+.about img {
+    width: 10%;
+}
+
+#orcamento-about {
+    align-items: start;
+    
+    a {
+        text-decoration: none;
+        color: var(--preto);
+    }
+}
+
+.title {
+    margin-top: var(--m);
+}
+
+.client-info {
+    margin-top: var(--m);
+}
+
+.table {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--m);
+}
+
+table {
+    border-collapse: collapse;
+    font-size: 1rem;
+}
+
+th {
+    background-color: var(--preto);
+    color: var(--branco);
+    padding: calc(var(--p) / 4) var(--p);
+}
+
+td {
+    padding: 1px var(--p);
+}
+
+th, td {
+    border: 1px solid var(--preto);
+}
+
+tfoot th {
+    text-align: end;
+}
+
+#orcamento-footer {
+    margin-top: var(--m);
+}
+
+@media(max-width: 413px) {
+    .about img {
+        width: 50%;
+    }
+
+    table {
+        font-size: 0.5rem;
+    }
+}
