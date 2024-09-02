@@ -1,6 +1,24 @@
 let cads = document.getElementById('cads')
 let pdf = document.getElementById('baixar-pdf')
 
+function teste() {
+    let container = '<h1 style="color: black;">Olá Mundo!</h1>'
+
+    const option = {
+        margin: [10, 10, 10, 10], // margem
+        filename: "meu-pdf.pdf", // nome do arquivo
+        html2canvas: {scale: 2}, // Escala obs: 2 padrão do html
+        jsPDF: {
+            unit: 'mm', // unidade obs: mm = milimetro
+            format: 'a4', // formato A4
+            orientation: 'portrait' // Orientação Retrato
+        }
+
+    }
+    html2pdf().set(option).from(container).save()
+}
+
+
 cads.addEventListener('click', () => {
     let itens = Number(document.getElementById('itens').value)
     let imprima = document.getElementById('imprima')
@@ -22,24 +40,58 @@ cads.addEventListener('click', () => {
         imprima.innerHTML += `
             <div class='produto'>
                 <hr><br>
-                <label>Insira o nome do produto</label>
-                <input id='nome${i}' type='text'>
+                <label>
+                    Insira o nome do produto: <br>
+                    <input id='nome${i}' list='vidro'>
+                </label>
+                <datalist id='vidro'>
+                    <option>Janela Fixa</option>
+                    <option>Janela 2 Folhas</option>
+                    <option>Janela 4 Folhas</option>
+                    <option>Janela Maxiar</option>
+                    <option>Janela Basculante</option>
+                    <option value="Porta 2 Folhas"></option>
+                    <option value="Porta 4 Folhas"></option>
+                    <option value="Porta Pivotante"></option>
+                    <option value="Porta Mão Amiga"></option>
+                    <option value="Porta RollDoor"></option>
+                    <option value="Portão de Correr"></option>
+                    <option value="Portão de Abrir"></option>
+                    <option value="Espelho Bisote"></option>
+                    <option value="Espelho Lapidado"></option>
+                </datalist>
+                
+                <label>Insira a largura do produto</label>
+                <input id='lar${i}' type='number'>
+
+                <label>Insira a altura do produto</label>
+                <input id='alt${i}' type='number'>
+
+                <label>Insira o preço do Aluminio</label>
+                <input id='alu${i}' type='number'>
+
+                <label>Insira o preço da Ferragens</label>
+                <input id='fer${i}' type='number'>
+                
                 <label>Insira a quantidade do produto</label>
                 <input id='qtde${i}' type='number'>
-                <label>Insira o preço unitário do produto</label>
-                <input id='precoU${i}' type='number'>
             </div>
         `
     }
 
     imprima.innerHTML += `
         <br><hr><br>
-        <label for="coment">Gostaria de Inserir um Comentário?</label>
-        <input id="coment" type="text">
+        <label for="coment">Gostaria de Inserir um Comentário?
+            <input id="coment" list='comentario'>
+
+            <datalist id='comentario'>
+                <option>Crédito</option>
+            </datalist>
+        </label>
     `
 
     imprima.innerHTML += `
-        <button id='orcar'>Gerar Orçamento</button>
+        <button id='orcar'>Vizualizar Orçamento</button>
         <hr><br>
     `
 
@@ -47,8 +99,6 @@ cads.addEventListener('click', () => {
 
     orcar.addEventListener('click', () => {
         let itens = Number(document.getElementById('itens').value)
-        let orcamento = document.getElementById('orcamento-about')
-        let footer = document.getElementById('orcamento-footer')
 
         let prod = []
         let total = 0
@@ -59,6 +109,9 @@ cads.addEventListener('click', () => {
         let dateE = document.getElementById('dateE').value
         let numO = Number(document.getElementById('numO').value)
         let coment = document.getElementById('coment').value
+        let footer = document.getElementById('orcamento-footer')
+        let about = document.getElementById('orcamento-about')
+
 
         let head = document.getElementById('thead')
         let body = document.getElementById('tbody')
@@ -68,25 +121,31 @@ cads.addEventListener('click', () => {
             prod.push([
                 document.getElementById(`nome${i}`).value,
                 Number(document.getElementById(`qtde${i}`).value),
-                Number(document.getElementById(`precoU${i}`).value)
+                Number(document.getElementById(`fer${i}`).value),
+                Number(document.getElementById(`alu${i}`).value),
+                Number(document.getElementById(`lar${i}`).value),
+                Number(document.getElementById(`alt${i}`).value)
             ])
-
+    
             console.table(prod)
-
         }
-
+    
         prod.forEach(activity => {
-            let totalU = activity[1] * activity[2]
-            activity[3] = totalU
+            let area = activity[4] * activity[5] // area do vidro
+            let totalVidro = area * 150 //valor metro² do vidro
+            let totalAc = totalVidro + activity[2] + activity[3] // valor unitario do vidro
+            let lucro = totalAc * 0.7 //lucro 70%
+            activity[6] = totalAc + lucro
+            activity[7] = activity[6] * activity[1] // valor semi-total
         })
-
+    
         for (let i = 0; i < itens; i++) {
-            total += prod[i][3]
+            total += prod[i][7] // valor total
         }
-
+    
         console.table(prod)
 
-        orcamento.innerHTML = `
+        about.innerHTML = `
             <div class='about'>
                 <img src="./public/logo.png" alt="">
                 <h1>Prinz Vidraçaria</h1>
@@ -145,8 +204,8 @@ cads.addEventListener('click', () => {
                     <td>${i + 1}</td>
                     <td>${prod[i][0]}</td>
                     <td>${prod[i][1]}</td>
-                    <td>R$: ${(prod[i][2]).toFixed(2)}</td>
-                    <td>R$: ${(prod[i][3]).toFixed(2)}</td>
+                    <td>R$: ${(prod[i][6]).toFixed(2)}</td>
+                    <td>R$: ${(prod[i][7]).toFixed(2)}</td>
                 </tr>
             `
         }
@@ -207,20 +266,26 @@ pdf.addEventListener('click', () => {
             prod.push([
                 document.getElementById(`nome${i}`).value,
                 Number(document.getElementById(`qtde${i}`).value),
-                Number(document.getElementById(`precoU${i}`).value)
+                Number(document.getElementById(`fer${i}`).value),
+                Number(document.getElementById(`alu${i}`).value),
+                Number(document.getElementById(`lar${i}`).value),
+                Number(document.getElementById(`alt${i}`).value)
             ])
-
+    
             console.table(prod)
-
         }
-
+    
         prod.forEach(activity => {
-            let totalU = activity[1] * activity[2]
-            activity[3] = totalU
+            let area = activity[4] * activity[5] // area do vidro
+            let totalVidro = area * 150 //valor metro² do vidro
+            let totalAc = totalVidro + activity[2] + activity[3] // valor unitario do vidro
+            let lucro = totalAc * 0.7 //lucro 70%
+            activity[6] = totalAc + lucro
+            activity[7] = activity[6] * activity[1] // valor semi-total
         })
-
+    
         for (let i = 0; i < itens; i++) {
-            total += prod[i][3]
+            total += prod[i][7] // valor total
         }
 
         console.table(prod)
@@ -252,6 +317,7 @@ pdf.addEventListener('click', () => {
             </style>
 
             <div class='about'>
+                <img src='https://prinz-orcamento.netlify.app/public/logo.png'>
                 <h1>Prinz Vidraçaria</h1>
                 <p>
                     <a href='https://api.whatsapp.com/send/?phone=5548998206570&text&type=phone_number&app_absent=0'>
@@ -308,8 +374,8 @@ pdf.addEventListener('click', () => {
                     <td>${i + 1}</td>
                     <td>${prod[i][0]}</td>
                     <td>${prod[i][1]}</td>
-                    <td>R$: ${(prod[i][2]).toFixed(2)}</td>
-                    <td>R$: ${(prod[i][3]).toFixed(2)}</td>
+                    <td>R$: ${(prod[i][6]).toFixed(2)}</td>
+                    <td>R$: ${(prod[i][7]).toFixed(2)}</td>
                 </tr>
             `
         }
