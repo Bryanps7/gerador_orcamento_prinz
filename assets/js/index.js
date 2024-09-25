@@ -73,7 +73,10 @@ cads.addEventListener('click', () => {
                 <label>Insira o preço da Ferragens</label>
                 <input id='fer${i}' type='number'>
                 
-                <label>Insira a quantidade do produto</label>
+                <label>Insira o preço do m² do vidro</label>
+                <input id='mVidro${i}' type='number'>
+                
+                <label>Insira a quantidade do produXto</label>
                 <input id='qtde${i}' type='number'>
             </div>
         `
@@ -88,6 +91,9 @@ cads.addEventListener('click', () => {
                 <option>Crédito</option>
             </datalist>
         </label>
+
+        <label for='lucro'>Qual seria o lucro?</label>
+        <input id='lucro' type='number'>
     `
 
     imprima.innerHTML += `
@@ -111,6 +117,15 @@ cads.addEventListener('click', () => {
         let coment = document.getElementById('coment').value
         let footer = document.getElementById('orcamento-footer')
         let about = document.getElementById('orcamento-about')
+        
+        let lucro = Number(document.getElementById('lucro').value)
+        let verdadeiroLucro = 0
+
+        if(lucro == 0) {
+            verdadeiroLucro = 0.7
+        } else {
+            verdadeiroLucro = lucro / 100
+        }
 
 
         let head = document.getElementById('thead')
@@ -124,7 +139,8 @@ cads.addEventListener('click', () => {
                 Number(document.getElementById(`fer${i}`).value),
                 Number(document.getElementById(`alu${i}`).value),
                 Number(document.getElementById(`lar${i}`).value),
-                Number(document.getElementById(`alt${i}`).value)
+                Number(document.getElementById(`alt${i}`).value),
+                Number(document.getElementById(`mVidro${i}`).value)
             ])
     
             console.table(prod)
@@ -132,15 +148,15 @@ cads.addEventListener('click', () => {
     
         prod.forEach(activity => {
             let area = activity[4] * activity[5] // area do vidro
-            let totalVidro = area * 150 //valor metro² do vidro
+            let totalVidro = area * activity[6] //valor metro² do vidro
             let totalAc = totalVidro + activity[2] + activity[3] // valor unitario do vidro
-            let lucro = totalAc * 0.7 //lucro 70%
-            activity[6] = totalAc + lucro
-            activity[7] = activity[6] * activity[1] // valor semi-total
+            let lucro = totalAc * verdadeiroLucro //lucro 70%
+            activity[7] = totalAc + lucro
+            activity[8] = activity[7] * activity[1] // valor semi-total
         })
     
         for (let i = 0; i < itens; i++) {
-            total += prod[i][7] // valor total
+            total += prod[i][8] // valor total
         }
     
         console.table(prod)
@@ -204,8 +220,8 @@ cads.addEventListener('click', () => {
                     <td>${i + 1}</td>
                     <td>${prod[i][0]}</td>
                     <td>${prod[i][1]}</td>
-                    <td>R$: ${(prod[i][6]).toFixed(2)}</td>
                     <td>R$: ${(prod[i][7]).toFixed(2)}</td>
+                    <td>R$: ${(prod[i][8]).toFixed(2)}</td>
                 </tr>
             `
         }
@@ -262,6 +278,15 @@ pdf.addEventListener('click', () => {
         let numO = Number(document.getElementById('numO').value)
         let coment = document.getElementById('coment').value
 
+        let lucro = Number(document.getElementById('lucro').value)
+        let verdadeiroLucro = 0
+
+        if(lucro == 0) {
+            verdadeiroLucro = 0.7
+        } else {
+            verdadeiroLucro = lucro / 100
+        }
+
         for (let i = 1; i <= itens; i++) {
             prod.push([
                 document.getElementById(`nome${i}`).value,
@@ -269,7 +294,8 @@ pdf.addEventListener('click', () => {
                 Number(document.getElementById(`fer${i}`).value),
                 Number(document.getElementById(`alu${i}`).value),
                 Number(document.getElementById(`lar${i}`).value),
-                Number(document.getElementById(`alt${i}`).value)
+                Number(document.getElementById(`alt${i}`).value),
+                Number(document.getElementById(`mVidro${i}`).value)
             ])
     
             console.table(prod)
@@ -277,11 +303,11 @@ pdf.addEventListener('click', () => {
     
         prod.forEach(activity => {
             let area = activity[4] * activity[5] // area do vidro
-            let totalVidro = area * 150 //valor metro² do vidro
+            let totalVidro = area * activity[6] //valor metro² do vidro
             let totalAc = totalVidro + activity[2] + activity[3] // valor unitario do vidro
-            let lucro = totalAc * 0.7 //lucro 70%
-            activity[6] = totalAc + lucro
-            activity[7] = activity[6] * activity[1] // valor semi-total
+            let lucro = totalAc * verdadeiroLucro //lucro 70%
+            activity[7] = totalAc + lucro
+            activity[8] = activity[7] * activity[1] // valor semi-total
         })
     
         for (let i = 0; i < itens; i++) {
@@ -374,8 +400,8 @@ pdf.addEventListener('click', () => {
                     <td>${i + 1}</td>
                     <td>${prod[i][0]}</td>
                     <td>${prod[i][1]}</td>
-                    <td>R$: ${(prod[i][6]).toFixed(2)}</td>
                     <td>R$: ${(prod[i][7]).toFixed(2)}</td>
+                    <td>R$: ${(prod[i][8]).toFixed(2)}</td>
                 </tr>
             `
         }
