@@ -1,58 +1,138 @@
-:root {
-    --azulEE: rgb(0, 25, 66);
-    --azulE: rgb(0, 48, 124);
-    --azulF: rgb(1, 144, 223);
-    --azulFO: rgba(1, 144, 223, 0.5);
-    --preto: rgb(0, 0, 0);
-    --cinza: rgb(128, 128, 128);
-    --branco: rgb(255, 255, 255);
-    --brancoO: rgba(255, 255, 255, 0.8);
+/* ==========================================================================
+   Vidraçaria Prinz — Gerador de Orçamentos
+   Design tokens: cores, tipografia, espaçamentos e sombras
+   ========================================================================== */
 
-    --p: 15px;
-    --m: 15px;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    /* Paleta baseada na identidade visual da marca (azul do logo) */
+    --brand-900: #001240;
+    --brand-800: #012159;
+    --brand-700: #013a82;
+    --brand-600: #0169b4;
+    --brand-500: #0190df;
+    --brand-400: #3fb0ec;
+    --brand-100: #e4f3fc;
+    --brand-50:  #f4faff;
+
+    --ink-900: #0f172a;
+    --ink-700: #33415a;
+    --ink-500: #64748b;
+    --ink-300: #b9c3d1;
+
+    --line: #e2e8f2;
+    --paper: #ffffff;
+    --surface: #eef3fa;
+
+    --success: #1a9c6b;
+    --danger: #d84343;
+
+    /* Espaçamentos */
+    --sp-1: 4px;
+    --sp-2: 8px;
+    --sp-3: 12px;
+    --sp-4: 16px;
+    --sp-5: 24px;
+    --sp-6: 32px;
+    --sp-7: 48px;
+
+    /* Raios e sombras */
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 22px;
+
+    --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08);
+    --shadow-md: 0 10px 26px rgba(15, 23, 42, 0.10);
+    --shadow-lg: 0 24px 60px rgba(1, 58, 130, 0.18);
+
+    --font-heading: 'Poppins', 'Segoe UI', Arial, sans-serif;
+    --font-body: 'Inter', 'Segoe UI', Arial, sans-serif;
+
+    /* Compatibilidade com variáveis antigas usadas em outras partes do projeto */
+    --azulEE: var(--brand-900);
+    --azulE: var(--brand-700);
+    --azulF: var(--brand-500);
+    --azulFO: var(--brand-500);
+    --preto: var(--ink-900);
+    --cinza: var(--ink-500);
+    --branco: var(--paper);
+    --brancoO: rgba(255, 255, 255, 0.85);
+    --p: var(--sp-4);
+    --m: var(--sp-4);
     --b: 1px;
-    --br: 15px;
-    --bs: 0 0 10px var(--cinza);
+    --br: var(--radius-md);
+    --bs: var(--shadow-md);
 }
 
-* {
-    font-family: Arial;
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: var(--font-body);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    color: var(--ink-900);
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.01em;
 }
 
 label {
-    margin-top: calc(var(--m) / 2);
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ink-700);
+    margin-bottom: var(--sp-1);
 }
 
 input {
-    outline-style: hidden;
-    outline-color: var(--azulF);
-    outline-width: 1px;
-    border-radius: calc(var(--br) / 3);
-    border: 0;
-    padding: calc(var(--p) / 1.5) calc(var(--p) / 1.5);
+    width: 100%;
+    background-color: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    color: var(--ink-900);
+    transition: border-color 160ms ease, box-shadow 160ms ease;
 }
 
-input[type="date"] {
-    width: 170px;
+input::placeholder {
+    color: var(--ink-300);
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--brand-500);
+    box-shadow: 0 0 0 4px var(--brand-100);
+}
+
+input[type="date"],
+input[type="number"] {
+    color-scheme: light;
 }
 
 button {
-    margin-top: var(--m);
-    padding: calc(var(--p) /2) var(--p);
-    border-radius: calc(var(--br) / 2);
-    border: var(--b) solid var(--azulE);
-    background-color: var(--azulEE);
-    color: var(--branco);
-    font-size: 1rem;
-    font-weight: bold;
+    font-family: var(--font-heading);
+    cursor: pointer;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 12px 22px;
+    transition: transform 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
 }
 
-button:hover {
-    box-shadow: 0 0 3px var(--azulEE);
-    transition: 300ms;
-    font-size: 1.05rem;
-    background-color: var(--azulE); 
-    cursor: pointer;
+button:active {
+    transform: translateY(1px);
 }

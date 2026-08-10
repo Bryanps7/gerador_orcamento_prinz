@@ -1,130 +1,446 @@
+/* ==========================================================================
+   Vidraçaria Prinz — Gerador de Orçamentos — Layout e componentes
+   ========================================================================== */
+
 body {
+    min-height: 100vh;
+    background:
+        radial-gradient(1200px 600px at 10% -10%, var(--brand-100), transparent),
+        radial-gradient(900px 500px at 110% 10%, var(--brand-50), transparent),
+        var(--surface);
+    padding: var(--sp-6) var(--sp-4) var(--sp-7);
+}
+
+.page {
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+/* ---------- Cabeçalho ---------- */
+
+.page-header {
     display: flex;
-    flex-direction: center; 
-    justify-content: center;
     align-items: center;
-    background-color: var(--azulEE);
-    color: var(--branco);
+    gap: var(--sp-4);
+    margin-bottom: var(--sp-6);
 }
 
-.area {
-    width: 80%;
-    background-color: var(--azulFO);
-    padding: var(--p);
-    border-radius: var(--br);
-    text-align: center;
-    margin-top: var(--m);
-    box-shadow: 0 0 3px var(--cinza);
+.page-header__logo {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    background: var(--paper);
+    border-radius: var(--radius-md);
+    padding: var(--sp-2);
+    box-shadow: var(--shadow-sm);
 }
 
-button {
-    margin-bottom: var(--m);
+.page-header h1 {
+    font-size: clamp(1.4rem, 2vw, 1.9rem);
+    color: var(--brand-900);
+    font-weight: 800;
 }
+
+.page-header .subtitle {
+    color: var(--ink-500);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+/* ---------- Layout principal (formulário + prévia) ---------- */
+
+.layout {
+    display: grid;
+    grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+    gap: var(--sp-6);
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card {
+    background: var(--paper);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--sp-5);
+}
+
+.card__title {
+    font-size: 1.05rem;
+    color: var(--brand-800);
+    margin-bottom: var(--sp-4);
+    padding-bottom: var(--sp-3);
+    border-bottom: 2px solid var(--brand-100);
+}
+
+.form-card {
+    position: sticky;
+    top: var(--sp-5);
+}
+
+@media (max-width: 900px) {
+    .form-card {
+        position: static;
+    }
+}
+
+.field {
+    margin-bottom: var(--sp-4);
+}
+
+.field-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--sp-3);
+    align-items: end;
+}
+
+.hint {
+    font-size: 0.8rem;
+    color: var(--ink-500);
+    margin-top: var(--sp-1);
+}
+
+/* ---------- Botões ---------- */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-2);
+    width: 100%;
+    color: var(--paper);
+}
+
+.btn--primary {
+    background: linear-gradient(135deg, var(--brand-600), var(--brand-800));
+    box-shadow: var(--shadow-sm);
+}
+
+.btn--primary:hover {
+    box-shadow: 0 10px 24px rgba(1, 58, 130, 0.28);
+}
+
+.btn--ghost {
+    background: var(--brand-50);
+    color: var(--brand-800);
+    border: 1.5px solid var(--brand-100);
+}
+
+.btn--ghost:hover {
+    background: var(--brand-100);
+}
+
+.btn--accent {
+    background: linear-gradient(135deg, var(--brand-500), var(--brand-700));
+    box-shadow: var(--shadow-md);
+    font-size: 1.02rem;
+    padding: 14px 28px;
+}
+
+.btn--accent:hover {
+    box-shadow: 0 16px 34px rgba(1, 58, 130, 0.32);
+}
+
+.btn--accent:disabled,
+.btn--primary:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* ---------- Formulário dinâmico de itens ---------- */
 
 #imprima {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+    gap: var(--sp-4);
+}
 
-    hr {
-        width: 100%;
-    }
+.client-fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    padding-top: var(--sp-2);
+}
+
+.section-label {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--brand-600);
+    margin-top: var(--sp-3);
 }
 
 .produto {
+    background: var(--brand-50);
+    border: 1.5px solid var(--brand-100);
+    border-radius: var(--radius-md);
+    padding: var(--sp-4);
     display: flex;
     flex-direction: column;
+    gap: var(--sp-3);
+}
+
+.produto__title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--brand-800);
+    font-size: 0.95rem;
+}
+
+.produto__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-3);
+}
+
+@media (max-width: 480px) {
+    .produto__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.produto__grid .field-full {
+    grid-column: 1 / -1;
+}
+
+/* ---------- Prévia do orçamento ---------- */
+
+.preview-card {
+    color: var(--ink-900);
+    min-height: 320px;
+}
+
+.preview-card:empty::before,
+#orcamento-about:empty ~ .table {
+    display: none;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-
-    label {
-        margin-top: var(--m);
-    }
-
-    hr {
-        margin-top: var(--m);
-    }
+    text-align: center;
+    gap: var(--sp-2);
+    padding: var(--sp-7) var(--sp-4);
+    color: var(--ink-500);
 }
 
-.margin {
-    margin-top: 15px;
+.empty-state strong {
+    color: var(--ink-700);
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
 }
 
-#orcar {
-    margin-top: var(--m);
-}
-
-.orcamento {
-    background-color: var(--branco);
-    border-radius: var(--br);
-    padding: var(--p);
-    box-shadow: var(--bs);
-    color: var(--preto);
-    align-items: start;
-
+.about {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-5);
+    padding-bottom: var(--sp-4);
+    border-bottom: 2px solid var(--brand-100);
+    margin-bottom: var(--sp-4);
 }
 
 .about img {
-    width: 10%;
+    width: 84px;
+    height: 84px;
+    object-fit: contain;
+    flex-shrink: 0;
 }
 
-#orcamento-about {
-    align-items: start;
-    
-    a {
-        text-decoration: none;
-        color: var(--preto);
-    }
+.about-info h2 {
+    color: var(--brand-900);
+    font-size: 1.25rem;
+    margin-bottom: var(--sp-1);
 }
 
-.title {
-    margin-top: var(--m);
+.about-info p {
+    font-size: 0.85rem;
+    color: var(--ink-500);
+    line-height: 1.5;
+}
+
+.about-info a {
+    text-decoration: none;
+    color: var(--ink-500);
+}
+
+.about-info a:hover {
+    color: var(--brand-600);
+}
+
+.orcamento-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: var(--sp-3);
+    margin-bottom: var(--sp-4);
+}
+
+.title h2 {
+    color: var(--brand-800);
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+.title .meta-line {
+    color: var(--ink-500);
+    font-size: 0.85rem;
+    margin-top: var(--sp-1);
 }
 
 .client-info {
-    margin-top: var(--m);
+    background: var(--brand-50);
+    border-radius: var(--radius-md);
+    padding: var(--sp-4);
+    margin-bottom: var(--sp-4);
+}
+
+.client-info h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--brand-600);
+    margin-bottom: var(--sp-2);
+}
+
+.client-info p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--ink-900);
 }
 
 .table {
-    display: flex;
-    justify-content: center;
-    margin-top: var(--m);
+    margin-top: var(--sp-3);
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    border: 1.5px solid var(--line);
 }
 
 table {
+    width: 100%;
     border-collapse: collapse;
-    font-size: 1rem;
+    font-size: 0.92rem;
 }
 
 th {
-    background-color: var(--preto);
-    color: var(--branco);
-    padding: calc(var(--p) / 4) var(--p);
+    background: linear-gradient(135deg, var(--brand-700), var(--brand-900));
+    color: var(--paper);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: var(--sp-3) var(--sp-3);
+    text-align: left;
 }
 
 td {
-    padding: 1px var(--p);
+    padding: var(--sp-3);
+    border-bottom: 1px solid var(--line);
 }
 
-th, td {
-    border: 1px solid var(--preto);
+tbody tr:nth-child(even) {
+    background: var(--brand-50);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
 }
 
 tfoot th {
-    text-align: end;
+    background: var(--brand-50);
+    color: var(--brand-900);
+    text-align: right;
+    font-size: 0.85rem;
+}
+
+tfoot td {
+    background: var(--brand-50);
+    font-family: var(--font-heading);
+    font-weight: 800;
+    color: var(--brand-800);
+    font-size: 1.05rem;
+    border-bottom: none;
 }
 
 #orcamento-footer {
-    margin-top: var(--m);
+    margin-top: var(--sp-4);
+    padding-top: var(--sp-4);
+    border-top: 1.5px dashed var(--line);
 }
 
-@media(max-width: 413px) {
+#orcamento-footer h2 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--brand-600);
+    margin-bottom: var(--sp-1);
+}
+
+#orcamento-footer p {
+    color: var(--ink-700);
+    line-height: 1.6;
+}
+
+.orcamento-validade {
+    font-size: 0.8rem;
+    color: var(--ink-500);
+    margin-top: var(--sp-5);
+    text-align: right;
+}
+
+/* ---------- Barra de ação ---------- */
+
+.actions {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--sp-6);
+}
+
+/* ---------- Responsivo ---------- */
+
+@media (max-width: 480px) {
+    .about {
+        flex-direction: column;
+        text-align: center;
+    }
+
     .about img {
-        width: 50%;
+        width: 64px;
+        height: 64px;
     }
 
     table {
-        font-size: 0.5rem;
+        font-size: 0.78rem;
     }
+
+    th, td {
+        padding: var(--sp-2);
+    }
+}
+
+/* ==========================================================================
+   Estilos específicos para a geração do PDF
+   Aplicados ao clone de #orcamento no momento da exportação
+   ========================================================================== */
+
+.pdf-render {
+    width: 794px; /* largura de referência A4 a 96dpi */
+    background: var(--paper);
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+.pdf-render .table {
+    border-color: var(--line);
 }
